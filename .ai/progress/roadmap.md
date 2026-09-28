@@ -14,22 +14,22 @@ Rules: ADR-0027.
 ## Current Position
 
 - Phase: **P0 — Foundations** (implementation)
-- Next task: **P0-T06**
+- Next task: **P0-T10**
 - Non-critical for early P0: ADR-0036 (production hosting and recovery; dev/CI Supabase per ADR-0041)
 
 ## Phases
 
-| Phase | Name | Status | File |
-|---|---|---|---|
-| P0 | Foundations: docs, tooling, CI | in-progress | [p0-foundations.md](phases/p0-foundations.md) |
-| P1 | App shell: i18n, design system, branding | todo | [p1-app-shell.md](phases/p1-app-shell.md) |
-| P2 | Data foundation | todo | [p2-data-foundation.md](phases/p2-data-foundation.md) |
-| P3 | Identity, legal acceptance, referral capture | todo | [p3-identity.md](phases/p3-identity.md) |
-| P4 | Tenancy and RBAC | todo | [p4-tenancy-rbac.md](phases/p4-tenancy-rbac.md) |
-| P5 | Catalog, billing, entitlements | todo | [p5-billing-entitlements.md](phases/p5-billing-entitlements.md) |
-| P6 | Commercial: promo codes, deals, referral rewards | todo | [p6-commercial.md](phases/p6-commercial.md) |
-| P7 | Platform administration | todo | [p7-platform-admin.md](phases/p7-platform-admin.md) |
-| P8 | Hardening and starter templating | todo | [p8-hardening.md](phases/p8-hardening.md) |
+| Phase | Name                                             | Status      | File                                                            |
+| ----- | ------------------------------------------------ | ----------- | --------------------------------------------------------------- |
+| P0    | Foundations: docs, tooling, CI                   | in-progress | [p0-foundations.md](phases/p0-foundations.md)                   |
+| P1    | App shell: i18n, design system, branding         | todo        | [p1-app-shell.md](phases/p1-app-shell.md)                       |
+| P2    | Data foundation                                  | todo        | [p2-data-foundation.md](phases/p2-data-foundation.md)           |
+| P3    | Identity, legal acceptance, referral capture     | todo        | [p3-identity.md](phases/p3-identity.md)                         |
+| P4    | Tenancy and RBAC                                 | todo        | [p4-tenancy-rbac.md](phases/p4-tenancy-rbac.md)                 |
+| P5    | Catalog, billing, entitlements                   | todo        | [p5-billing-entitlements.md](phases/p5-billing-entitlements.md) |
+| P6    | Commercial: promo codes, deals, referral rewards | todo        | [p6-commercial.md](phases/p6-commercial.md)                     |
+| P7    | Platform administration                          | todo        | [p7-platform-admin.md](phases/p7-platform-admin.md)             |
+| P8    | Hardening and starter templating                 | todo        | [p8-hardening.md](phases/p8-hardening.md)                       |
 
 ## Phase Ordering Rationale
 

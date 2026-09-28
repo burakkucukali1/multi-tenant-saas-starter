@@ -1,0 +1,1 @@
+-- Synthetic dev/CI data only (ADR-0041). Never run in production.

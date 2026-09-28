@@ -13,12 +13,12 @@
 
 Every table declares one class in its migration comment:
 
-| Class | Examples | Policy |
-|---|---|---|
-| Lifecycle | workspaces, memberships, users | `deleted_at`, grace period, then purge |
-| Immutable | audit logs, legal acceptances, promo redemptions, referral attributions | Insert-only, with `UPDATE` and `DELETE` revoked. Erasure by pseudonymization |
-| Reference | plans, plan entitlements, roles, permissions, legal document versions, promo campaigns | `archived_at`, never deleted |
-| Ephemeral | invitation tokens, webhook idempotency keys | Hard delete or expire |
+| Class     | Examples                                                                               | Policy                                                                       |
+| --------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Lifecycle | workspaces, memberships, users                                                         | `deleted_at`, grace period, then purge                                       |
+| Immutable | audit logs, legal acceptances, promo redemptions, referral attributions                | Insert-only, with `UPDATE` and `DELETE` revoked. Erasure by pseudonymization |
+| Reference | plans, plan entitlements, roles, permissions, legal document versions, promo campaigns | `archived_at`, never deleted                                                 |
+| Ephemeral | invitation tokens, webhook idempotency keys                                            | Hard delete or expire                                                        |
 
 Rules:
 

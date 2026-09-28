@@ -30,18 +30,18 @@ Out of scope: admin management UIs (P7).
 
 ## Tasks
 
-| ID | Task | Level | Status | Depends |
-|---|---|---|---|---|
-| P6-T01 | `promo_campaigns` (reference) and `promo_redemptions` (immutable) schema | L2 | todo | — |
-| P6-T02 | Promo code validation at checkout against Stripe, and redemption recording | L2 | todo | T01 |
-| P6-T03 | Tenant promo code entry in checkout | L1 | todo | T02 |
-| P6-T04 | `platform.enterprise_deals` schema | L2 | todo | — |
-| P6-T05 | Deal commands: create a deal with a Stripe custom price and invoice subscription, plus entitlement grants for the contract window | L2 | todo | T04 |
-| P6-T06 | Read-time deal validity in entitlement resolution (through grants) | L2 | todo | T05 |
-| P6-T07 | Referral qualification evaluation (webhook-driven or at read time) | L2 | blocked | ADR-0035 |
-| P6-T08 | Reward fulfilment (grant or Stripe credit) | L2 | blocked | ADR-0035 |
-| P6-T09 | Tenant referral page (link, status) | L1 | blocked | ADR-0035 |
-| P6-T10 | Integration tests: promo redemption, deal grants, reward idempotency | L1 | todo | T02, T06 |
+| ID     | Task                                                                                                                              | Level | Status  | Depends  |
+| ------ | --------------------------------------------------------------------------------------------------------------------------------- | ----- | ------- | -------- |
+| P6-T01 | `promo_campaigns` (reference) and `promo_redemptions` (immutable) schema                                                          | L2    | todo    | —        |
+| P6-T02 | Promo code validation at checkout against Stripe, and redemption recording                                                        | L2    | todo    | T01      |
+| P6-T03 | Tenant promo code entry in checkout                                                                                               | L1    | todo    | T02      |
+| P6-T04 | `platform.enterprise_deals` schema                                                                                                | L2    | todo    | —        |
+| P6-T05 | Deal commands: create a deal with a Stripe custom price and invoice subscription, plus entitlement grants for the contract window | L2    | todo    | T04      |
+| P6-T06 | Read-time deal validity in entitlement resolution (through grants)                                                                | L2    | todo    | T05      |
+| P6-T07 | Referral qualification evaluation (webhook-driven or at read time)                                                                | L2    | blocked | ADR-0035 |
+| P6-T08 | Reward fulfilment (grant or Stripe credit)                                                                                        | L2    | blocked | ADR-0035 |
+| P6-T09 | Tenant referral page (link, status)                                                                                               | L1    | blocked | ADR-0035 |
+| P6-T10 | Integration tests: promo redemption, deal grants, reward idempotency                                                              | L1    | todo    | T02, T06 |
 
 ## Exit Criteria
 

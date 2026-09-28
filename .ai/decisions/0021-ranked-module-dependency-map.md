@@ -19,28 +19,28 @@ Many workflows touch several features. A flat "features never call each other" r
   - no undeclared edges
   - the forbidden pairs listed below
 
-| Rank | Module | May depend on |
-|---|---|---|
-| 0 | `lib/config`, `lib/i18n` | none |
-| 1 | `lib/db`, `lib/db/platform`, `lib/auth`, `lib/stripe` | `lib/config` |
-| 5 | `shared/` (design system, utilities) | `lib/config`, `lib/i18n` |
-| 10 | `features/audit` | `lib/db` |
-| 10 | `features/authz` | `lib/db` |
-| 15 | `platform/access` | `lib/db/platform`, `lib/auth`, `features/audit` |
-| 20 | `features/identity` | `lib/db`, `lib/auth`, `features/audit` |
-| 30 | `features/workspaces` | `lib/db`, `features/audit`, `features/identity` |
-| 30 | `features/plans` | `lib/db` |
-| 30 | `features/legal` | `lib/db`, `features/audit` |
-| 40 | `features/memberships` | `lib/db`, `features/audit`, `features/authz`, `features/identity`, `features/workspaces` |
-| 50 | `features/subscriptions` | `lib/db`, `lib/stripe`, `features/audit`, `features/plans`, `features/workspaces` |
-| 50 | `features/promotions` | `lib/db`, `lib/stripe`, `features/audit`, `features/plans` |
-| 60 | `features/entitlements` | `lib/db`, `features/audit`, `features/plans`, `features/subscriptions`, `features/memberships` |
-| 70 | `features/deals` | `lib/db/platform`, `lib/stripe`, `features/audit`, `features/entitlements`, `features/subscriptions`, `features/plans` |
-| 70 | `features/referrals` | `lib/db`, `lib/stripe`, `features/audit`, `features/identity`, `features/entitlements`, `features/subscriptions` |
-| 75 | `features/tenant-context` (resolves `TenantContext` once per request and mints `WorkspaceScope` from a membership) | `lib/db`, `lib/auth`, `features/identity`, `features/workspaces`, `features/memberships`, `features/authz`, `features/entitlements`, `features/legal` |
-| 80 | `workflows/*` (onboarding, invitations, ownership-transfer, checkout, plan-change, workspace-lifecycle, user-erasure) | any module ranked below 80. **Never other workflows** |
-| 85 | `platform/*` read models and commands | `lib/db/platform`, `platform/access`, `features/audit`, `shared/`, and features and workflows (commands only, through a platform-minted `WorkspaceScope`) |
-| 100 | `app/` routes and layouts | any public API, `shared/` |
+| Rank | Module                                                                                                                | May depend on                                                                                                                                             |
+| ---- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | `lib/config`, `lib/i18n`                                                                                              | none                                                                                                                                                      |
+| 1    | `lib/db`, `lib/db/platform`, `lib/auth`, `lib/stripe`                                                                 | `lib/config`                                                                                                                                              |
+| 5    | `shared/` (design system, utilities)                                                                                  | `lib/config`, `lib/i18n`                                                                                                                                  |
+| 10   | `features/audit`                                                                                                      | `lib/db`                                                                                                                                                  |
+| 10   | `features/authz`                                                                                                      | `lib/db`                                                                                                                                                  |
+| 15   | `platform/access`                                                                                                     | `lib/db/platform`, `lib/auth`, `features/audit`                                                                                                           |
+| 20   | `features/identity`                                                                                                   | `lib/db`, `lib/auth`, `features/audit`                                                                                                                    |
+| 30   | `features/workspaces`                                                                                                 | `lib/db`, `features/audit`, `features/identity`                                                                                                           |
+| 30   | `features/plans`                                                                                                      | `lib/db`                                                                                                                                                  |
+| 30   | `features/legal`                                                                                                      | `lib/db`, `features/audit`                                                                                                                                |
+| 40   | `features/memberships`                                                                                                | `lib/db`, `features/audit`, `features/authz`, `features/identity`, `features/workspaces`                                                                  |
+| 50   | `features/subscriptions`                                                                                              | `lib/db`, `lib/stripe`, `features/audit`, `features/plans`, `features/workspaces`                                                                         |
+| 50   | `features/promotions`                                                                                                 | `lib/db`, `lib/stripe`, `features/audit`, `features/plans`                                                                                                |
+| 60   | `features/entitlements`                                                                                               | `lib/db`, `features/audit`, `features/plans`, `features/subscriptions`, `features/memberships`                                                            |
+| 70   | `features/deals`                                                                                                      | `lib/db/platform`, `lib/stripe`, `features/audit`, `features/entitlements`, `features/subscriptions`, `features/plans`                                    |
+| 70   | `features/referrals`                                                                                                  | `lib/db`, `lib/stripe`, `features/audit`, `features/identity`, `features/entitlements`, `features/subscriptions`                                          |
+| 75   | `features/tenant-context` (resolves `TenantContext` once per request and mints `WorkspaceScope` from a membership)    | `lib/db`, `lib/auth`, `features/identity`, `features/workspaces`, `features/memberships`, `features/authz`, `features/entitlements`, `features/legal`     |
+| 80   | `workflows/*` (onboarding, invitations, ownership-transfer, checkout, plan-change, workspace-lifecycle, user-erasure) | any module ranked below 80. **Never other workflows**                                                                                                     |
+| 85   | `platform/*` read models and commands                                                                                 | `lib/db/platform`, `platform/access`, `features/audit`, `shared/`, and features and workflows (commands only, through a platform-minted `WorkspaceScope`) |
+| 100  | `app/` routes and layouts                                                                                             | any public API, `shared/`                                                                                                                                 |
 
 Forbidden pairs, regardless of rank:
 

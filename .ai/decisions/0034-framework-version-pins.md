@@ -14,13 +14,13 @@ Every derived product inherits exact runtime and tooling versions. Pins must mat
 
 Pinned on **2026-09-28** (resolved from npm registry and Node.js release status):
 
-| Package | Pin | Notes |
-|---|---|---|
-| **Next.js** | `16.3.6` | Latest stable on npm at pin date |
-| **React** | `19.3.0` | Latest stable; satisfies Next.js 16.3.6 peer `^19.0.0` |
-| **react-dom** | `19.3.0` | Same as React |
-| **Node.js** | `24.21.0` | Active LTS (“Krypton”); satisfies Next.js engine `>=20.9.0` |
-| **pnpm** | `12.6.0` | Latest stable on npm at pin date |
+| Package       | Pin       | Notes                                                       |
+| ------------- | --------- | ----------------------------------------------------------- |
+| **Next.js**   | `16.3.6`  | Latest stable on npm at pin date                            |
+| **React**     | `19.3.0`  | Latest stable; satisfies Next.js 16.3.6 peer `^19.0.0`      |
+| **react-dom** | `19.3.0`  | Same as React                                               |
+| **Node.js**   | `24.21.0` | Active LTS (“Krypton”); satisfies Next.js engine `>=20.9.0` |
+| **pnpm**      | `12.6.0`  | Latest stable on npm at pin date                            |
 
 **Policy (ADR-0030):**
 

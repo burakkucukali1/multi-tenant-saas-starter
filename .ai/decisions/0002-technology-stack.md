@@ -11,22 +11,22 @@ The starter needs a stack that works well for full-stack TypeScript, is widely k
 
 ## Decision
 
-| Concern | Choice |
-|---|---|
-| Framework | Next.js 16.3.6 (ADR-0034) |
-| Language | TypeScript, strict mode |
-| Styling | Tailwind CSS |
-| Identity | Clerk (ADR-0005) |
-| Database | Supabase PostgreSQL (ADR-0007) |
-| Data access | Supabase client and generated types, no ORM |
-| Client server-state | TanStack Query |
-| i18n | next-intl (ADR-0024) |
-| Billing | Stripe (ADR-0013) |
-| Unit and integration tests | Jest |
-| E2E tests | Playwright |
-| Formatting | Prettier with `@trivago/prettier-plugin-sort-imports` |
-| Node.js | 24.21.0 Active LTS (ADR-0034) |
-| Package manager | pnpm 12.6.0 (ADR-0034) |
+| Concern                    | Choice                                                |
+| -------------------------- | ----------------------------------------------------- |
+| Framework                  | Next.js 16.3.6 (ADR-0034)                             |
+| Language                   | TypeScript, strict mode                               |
+| Styling                    | Tailwind CSS                                          |
+| Identity                   | Clerk (ADR-0005)                                      |
+| Database                   | Supabase PostgreSQL (ADR-0007)                        |
+| Data access                | Supabase client and generated types, no ORM           |
+| Client server-state        | TanStack Query                                        |
+| i18n                       | next-intl (ADR-0024)                                  |
+| Billing                    | Stripe (ADR-0013)                                     |
+| Unit and integration tests | Jest                                                  |
+| E2E tests                  | Playwright                                            |
+| Formatting                 | Prettier with `@trivago/prettier-plugin-sort-imports` |
+| Node.js                    | 24.21.0 Active LTS (ADR-0034)                         |
+| Package manager            | pnpm 12.6.0 (ADR-0034)                                |
 
 Out of scope for v1: background job systems, email providers, error tracking, file storage, analytics vendors, AI providers.
 

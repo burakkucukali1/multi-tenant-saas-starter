@@ -10,18 +10,18 @@ The reusable multi-tenant SaaS starter has **41 accepted ADRs** (plus ADR-0033 s
 
 ## Planning Completion Checklist
 
-| Area | State | Reference |
-|---|---|---|
-| Technology and modular monolith | Accepted | ADR-0002, 0003 |
-| Multi-tenant model and isolation | Accepted | ADR-0004–0010 |
-| RBAC and platform isolation | Accepted | ADR-0011, 0012 |
-| Billing, commercial, legal | Accepted (referral rewards rules pending) | ADR-0013–0017 |
-| Data lifecycle, audit, time-bound state | Accepted | ADR-0018–0020 |
-| Dependency and recursion governance | Accepted | ADR-0021, 0022 |
-| Design system, i18n, testing, delivery | Accepted | ADR-0023–0030 |
-| Cloud-first Supabase | Accepted | ADR-0041 |
-| Roadmap and phase tasks | Documented | `.ai/progress/phases/` |
-| Project context | Filled | `.ai/project/project-context.md` |
+| Area                                    | State                                     | Reference                        |
+| --------------------------------------- | ----------------------------------------- | -------------------------------- |
+| Technology and modular monolith         | Accepted                                  | ADR-0002, 0003                   |
+| Multi-tenant model and isolation        | Accepted                                  | ADR-0004–0010                    |
+| RBAC and platform isolation             | Accepted                                  | ADR-0011, 0012                   |
+| Billing, commercial, legal              | Accepted (referral rewards rules pending) | ADR-0013–0017                    |
+| Data lifecycle, audit, time-bound state | Accepted                                  | ADR-0018–0020                    |
+| Dependency and recursion governance     | Accepted                                  | ADR-0021, 0022                   |
+| Design system, i18n, testing, delivery  | Accepted                                  | ADR-0023–0030                    |
+| Cloud-first Supabase                    | Accepted                                  | ADR-0041                         |
+| Roadmap and phase tasks                 | Documented                                | `.ai/progress/phases/`           |
+| Project context                         | Filled                                    | `.ai/project/project-context.md` |
 
 ## Critical Blockers for Starting P0 Implementation
 
@@ -29,11 +29,11 @@ None. Framework pins resolved in **ADR-0034** (2026-09-28).
 
 These **do not block** starting P0 except where noted:
 
-| ID | Decision | Blocks | Severity |
-|---|---|---|---|
+| ID       | Decision                                          | Blocks                                                             | Severity                   |
+| -------- | ------------------------------------------------- | ------------------------------------------------------------------ | -------------------------- |
 | ADR-0036 | Hosting target, production Supabase tier, RPO/RTO | Production deploy, staging projects (P8); optional slice of P0-T11 | Non-critical for first PRs |
-| ADR-0037 | UI primitives and color modes | P1 only | Non-critical until P1 |
-| ADR-0031 | Upstream sync model | P8 templating | Non-critical |
+| ADR-0037 | UI primitives and color modes                     | P1 only                                                            | Non-critical until P1      |
+| ADR-0031 | Upstream sync model                               | P8 templating                                                      | Non-critical               |
 
 **Owner / operator actions** (not ADRs): create `<app>-dev` and `<app>-ci` projects (P0-T16), configure GitHub secrets (P0-T17). Architecture is ready; resources must exist before integration tests run.
 
@@ -41,13 +41,13 @@ These **do not block** starting P0 except where noted:
 
 Resolve before the phase starts:
 
-| Phase | Proposed ADR | Topic |
-|---|---|---|
-| P4 | ADR-0032, 0038, 0028 (email match) | Retention, ownership rules, invitation security |
-| P5 | (phase open questions) | Trials, payment failure, Customer Portal, tax |
-| P6 | ADR-0035 | Referral reward rules |
-| P7 | ADR-0039, 0040 | Platform roles, bootstrap, impersonation |
-| P8 | ADR-0031, 0036 | Upstream sync, production environments |
+| Phase | Proposed ADR                       | Topic                                           |
+| ----- | ---------------------------------- | ----------------------------------------------- |
+| P4    | ADR-0032, 0038, 0028 (email match) | Retention, ownership rules, invitation security |
+| P5    | (phase open questions)             | Trials, payment failure, Customer Portal, tax   |
+| P6    | ADR-0035                           | Referral reward rules                           |
+| P7    | ADR-0039, 0040                     | Platform roles, bootstrap, impersonation        |
+| P8    | ADR-0031, 0036                     | Upstream sync, production environments          |
 
 ## Consistency Validation (2026-09-28)
 

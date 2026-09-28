@@ -29,12 +29,12 @@ Constraints this creates:
 
 ### 1. Environment Strategy
 
-| Environment | Supabase project | Tier | Clerk | Stripe | Data |
-|---|---|---|---|---|---|
-| Development | `<app>-dev` | Free | Development instance | Test mode | Synthetic seed only |
-| CI | `<app>-ci` | Free | Development instance | Test mode | Reset every run |
-| Staging | `<app>-staging` | Paid (ADR-0036) | Production-like instance | Test mode | Synthetic |
-| Production | `<app>-prod` | Paid (ADR-0036) | Production instance | Live mode | Real |
+| Environment | Supabase project | Tier            | Clerk                    | Stripe    | Data                |
+| ----------- | ---------------- | --------------- | ------------------------ | --------- | ------------------- |
+| Development | `<app>-dev`      | Free            | Development instance     | Test mode | Synthetic seed only |
+| CI          | `<app>-ci`       | Free            | Development instance     | Test mode | Reset every run     |
+| Staging     | `<app>-staging`  | Paid (ADR-0036) | Production-like instance | Test mode | Synthetic           |
+| Production  | `<app>-prod`     | Paid (ADR-0036) | Production instance      | Live mode | Real                |
 
 - The two Free projects are development and CI. They are **never shared** with each other, and never used for production or staging.
 - Staging and production are created before launch, on a paid tier (ADR-0036). There is no production to stage for before then, so no staging exists during early development.
@@ -48,12 +48,12 @@ Constraints this creates:
 
 #### Dev vs CI: Why Two Free Projects
 
-| Concern | Development (`<app>-dev`) | CI (`<app>-ci`) |
-|---|---|---|
-| Purpose | Human authoring: push migrations, manual testing, local app runs | Automated gate: reset, migrate, seed, tests, type diff, drift checks |
-| Lifetime of data | Persists between sessions until reset | Destroyed and rebuilt at the start of each CI run |
-| Who writes schema | Developers via `db push` on feature branches | CI only, from the pull request branch |
-| Failure mode if shared | CI reset wipes in-progress developer work | N/A |
+| Concern                | Development (`<app>-dev`)                                        | CI (`<app>-ci`)                                                      |
+| ---------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Purpose                | Human authoring: push migrations, manual testing, local app runs | Automated gate: reset, migrate, seed, tests, type diff, drift checks |
+| Lifetime of data       | Persists between sessions until reset                            | Destroyed and rebuilt at the start of each CI run                    |
+| Who writes schema      | Developers via `db push` on feature branches                     | CI only, from the pull request branch                                |
+| Failure mode if shared | CI reset wipes in-progress developer work                        | N/A                                                                  |
 
 **Tradeoff accepted:** the Free tier allows only two active projects during early development, so dev and CI consume both slots. Staging and production wait for a paid tier (ADR-0036). **Tradeoff rejected:** one project for dev and CI. That would violate “never share environments” (integration guide and ADR-0041) and make every CI run destructive to developer state.
 
@@ -117,12 +117,12 @@ How they are handled:
 
 Four classes, each with one mechanism:
 
-| Class | Examples | Mechanism | Environments |
-|---|---|---|---|
-| Reference data | roles, permissions, role grants, entitlement keys, audit action keys, plan structure | **Idempotent inserts in migrations**, validated against the code registries in CI | All |
-| Environment config | Stripe price mapping | Plans carry a stable `lookup_key`. Stripe prices use the same lookup keys in every mode. No Stripe IDs are stored per environment | All |
-| Synthetic development data | sample workspaces and memberships | `supabase/seed.sql`, deterministic | Development, CI, staging. **Never production** |
-| Test data | per-test workspaces | Jest factories (ADR-0025) | CI and development test runs |
+| Class                      | Examples                                                                             | Mechanism                                                                                                                         | Environments                                   |
+| -------------------------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Reference data             | roles, permissions, role grants, entitlement keys, audit action keys, plan structure | **Idempotent inserts in migrations**, validated against the code registries in CI                                                 | All                                            |
+| Environment config         | Stripe price mapping                                                                 | Plans carry a stable `lookup_key`. Stripe prices use the same lookup keys in every mode. No Stripe IDs are stored per environment | All                                            |
+| Synthetic development data | sample workspaces and memberships                                                    | `supabase/seed.sql`, deterministic                                                                                                | Development, CI, staging. **Never production** |
+| Test data                  | per-test workspaces                                                                  | Jest factories (ADR-0025)                                                                                                         | CI and development test runs                   |
 
 - Bootstrap data for production (first platform admin, initial legal document versions) is created by audited operator scripts and platform admin actions, never by `seed.sql`.
 - Seeded users need Clerk identities. A development seed script may create Clerk users through the Clerk Backend API, against the development instance only.
@@ -141,13 +141,13 @@ The model stays as in ADR-0007: RLS on, no permissive policies, privileges revok
 
 `db diff` needs Docker, so drift is detected without it. Each **drift category** has one owner, one detection method, and one remediation.
 
-| Category | What drift means | Detection | Remediation |
-|---|---|---|---|
-| **Migration history** | Applied migration versions on a project differ from `supabase/migrations/` in git | `supabase migration list` per linked project vs repository | Forward-only: add missing migrations via CI or `db push`; never edit applied history without Level 2 `migration repair` |
-| **Schema fingerprint** | Live DDL (tables, columns, constraints, indexes, RLS flags, policies, grants, function signatures) differs from the fingerprint produced by applying migrations to a clean CI build | Normalized `pg_catalog` query; compare dev and CI post-reset; compare staging/prod to CI golden fingerprint | Capture intent in a new migration; reset dev or rebuild CI; redeploy staging/prod only through CI |
-| **Platform config** | Data API exposed schemas, Auth settings, or other non-SQL settings differ from `config.toml` and runbook | CLI config push dry-run where supported; Management API verification script in CI | Update `config.toml` or runbook; push config; document incident dashboard edits |
-| **Postgres engine version** | Major (or pinned minor) Postgres version differs across projects | Included in fingerprint metadata | Align projects via Supabase upgrade before launch or before adding environments |
-| **Reference data** | Seeded roles, permissions, or registry-backed rows differ from migrations plus code registries | Registry-vs-seed CI checks (ADR-0025) | Fix migration seed inserts; reset non-production environments |
+| Category                    | What drift means                                                                                                                                                                    | Detection                                                                                                   | Remediation                                                                                                             |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Migration history**       | Applied migration versions on a project differ from `supabase/migrations/` in git                                                                                                   | `supabase migration list` per linked project vs repository                                                  | Forward-only: add missing migrations via CI or `db push`; never edit applied history without Level 2 `migration repair` |
+| **Schema fingerprint**      | Live DDL (tables, columns, constraints, indexes, RLS flags, policies, grants, function signatures) differs from the fingerprint produced by applying migrations to a clean CI build | Normalized `pg_catalog` query; compare dev and CI post-reset; compare staging/prod to CI golden fingerprint | Capture intent in a new migration; reset dev or rebuild CI; redeploy staging/prod only through CI                       |
+| **Platform config**         | Data API exposed schemas, Auth settings, or other non-SQL settings differ from `config.toml` and runbook                                                                            | CLI config push dry-run where supported; Management API verification script in CI                           | Update `config.toml` or runbook; push config; document incident dashboard edits                                         |
+| **Postgres engine version** | Major (or pinned minor) Postgres version differs across projects                                                                                                                    | Included in fingerprint metadata                                                                            | Align projects via Supabase upgrade before launch or before adding environments                                         |
+| **Reference data**          | Seeded roles, permissions, or registry-backed rows differ from migrations plus code registries                                                                                      | Registry-vs-seed CI checks (ADR-0025)                                                                       | Fix migration seed inserts; reset non-production environments                                                           |
 
 Scheduled jobs run categories **Migration history**, **Schema fingerprint**, and **Platform config** across all linked projects once staging and production exist.
 
@@ -164,13 +164,13 @@ Scheduled jobs run categories **Migration history**, **Schema fingerprint**, and
 
 ### 9. CI/CD Implications
 
-| Trigger | Job | Target |
-|---|---|---|
-| Pull request | Reset CI project, push migrations, seed, generate types and diff, lockdown and catalog checks, fingerprint, integration, isolation, authorization matrix | CI project |
-| Merge to `main` | Same checks, then migrate staging (once it exists) | Staging |
-| Release (manual approval, GitHub Environment protection) | Fingerprint pre-check, backup check, `db push`, then app deploy | Production |
-| Manual dispatch | Reset development to `main` | Development |
-| Scheduled | Drift check across all projects | All |
+| Trigger                                                  | Job                                                                                                                                                      | Target      |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Pull request                                             | Reset CI project, push migrations, seed, generate types and diff, lockdown and catalog checks, fingerprint, integration, isolation, authorization matrix | CI project  |
+| Merge to `main`                                          | Same checks, then migrate staging (once it exists)                                                                                                       | Staging     |
+| Release (manual approval, GitHub Environment protection) | Fingerprint pre-check, backup check, `db push`, then app deploy                                                                                          | Production  |
+| Manual dispatch                                          | Reset development to `main`                                                                                                                              | Development |
+| Scheduled                                                | Drift check across all projects                                                                                                                          | All         |
 
 - **Serialization:** all jobs that touch the CI project share one concurrency group, because parallel runs against a single CI project would corrupt each other. Tradeoff: pull requests queue for the database step.
 - **Within a run:** tests are parallel-safe because each creates its own workspaces (ADR-0025). There is one reset per run, not per test.
@@ -180,13 +180,13 @@ Scheduled jobs run categories **Migration history**, **Schema fingerprint**, and
 
 ### 10. Secrets, Ownership, and PAT Governance
 
-| Secret / credential | Owner | Storage | Rotation | Notes |
-|---|---|---|---|---|
-| Supabase **project ref** | Engineering | GitHub Environment variables (dev, ci, staging, prod) | N/A (project lifecycle) | Never in client bundle |
-| Supabase **database password** | Engineering | GitHub Secrets per environment | On compromise or quarterly | Used by CLI and server only |
-| Supabase **server API key** (secret / service role) | Engineering | GitHub Secrets; local `.env.local` for dev | On compromise; prefer revocable secret keys when available | `server-only` in `lib/db` (ADR-0007) |
-| Supabase **CLI access token** (PAT or org token) | **Dedicated machine identity**, not a personal account | GitHub Secrets for CI; developers use their own PAT locally only for `db push` to dev | Documented rotation; revoke on offboarding | **Personal PATs must not be stored in CI.** CI uses an org/service account token where Supabase supports it; otherwise a shared bot account with minimal scope |
-| Clerk, Stripe keys | Engineering | GitHub Secrets per environment | Vendor dashboards | ADR-0005, ADR-0013 |
+| Secret / credential                                 | Owner                                                  | Storage                                                                               | Rotation                                                   | Notes                                                                                                                                                          |
+| --------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Supabase **project ref**                            | Engineering                                            | GitHub Environment variables (dev, ci, staging, prod)                                 | N/A (project lifecycle)                                    | Never in client bundle                                                                                                                                         |
+| Supabase **database password**                      | Engineering                                            | GitHub Secrets per environment                                                        | On compromise or quarterly                                 | Used by CLI and server only                                                                                                                                    |
+| Supabase **server API key** (secret / service role) | Engineering                                            | GitHub Secrets; local `.env.local` for dev                                            | On compromise; prefer revocable secret keys when available | `server-only` in `lib/db` (ADR-0007)                                                                                                                           |
+| Supabase **CLI access token** (PAT or org token)    | **Dedicated machine identity**, not a personal account | GitHub Secrets for CI; developers use their own PAT locally only for `db push` to dev | Documented rotation; revoke on offboarding                 | **Personal PATs must not be stored in CI.** CI uses an org/service account token where Supabase supports it; otherwise a shared bot account with minimal scope |
+| Clerk, Stripe keys                                  | Engineering                                            | GitHub Secrets per environment                                                        | Vendor dashboards                                          | ADR-0005, ADR-0013                                                                                                                                             |
 
 **Governance rules:**
 
@@ -216,19 +216,19 @@ No v1 implementation is implied. This section exists so storage is not designed 
 
 ## Risks
 
-| Risk | Impact | Mitigation |
-|---|---|---|
-| Unmerged branch migrations left in development | Development drifts from `main`, and types are generated from the wrong schema | Reset development before schema branches. CI types come from the CI project only |
-| Free projects pause when inactive | CI fails | Explicit pause check. Manual restore |
-| Free tier limits (project count, storage, compute) | Cannot add environments. CI can hit size limits | Staging and production on a paid tier. Resets keep CI small |
-| Public reachability from day one | Any unlocked object is exposed | Lockdown as migration one, and catalog checks on every pull request |
-| Supabase CLI needs Docker for some commands | Workflow gaps | Workflow avoids `db diff`, `db pull`, and `db dump`. Fingerprinting replaces diffing |
-| Postgres major version mismatch between projects created at different times | Behavior drift | The fingerprint includes the version. Upgrade to align before launch |
-| Dashboard edits during incidents | Drift from migrations | Scheduled drift check. Mandatory follow-up migration |
-| CLI access token tied to a personal account | Offboarding and rotation risk | Section 10: no personal PAT in CI; dedicated bot or org token; rotation runbook |
-| Non-atomic database and app deploy | Runtime errors mid-deploy | Expand and contract rule |
-| Backups resurrect erased data | GDPR breach | Erasure ledger re-applied after restore |
-| No point-in-time recovery on lower tiers | Data loss window | Owner decides production tier and target recovery (ADR-0036) |
+| Risk                                                                        | Impact                                                                        | Mitigation                                                                           |
+| --------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Unmerged branch migrations left in development                              | Development drifts from `main`, and types are generated from the wrong schema | Reset development before schema branches. CI types come from the CI project only     |
+| Free projects pause when inactive                                           | CI fails                                                                      | Explicit pause check. Manual restore                                                 |
+| Free tier limits (project count, storage, compute)                          | Cannot add environments. CI can hit size limits                               | Staging and production on a paid tier. Resets keep CI small                          |
+| Public reachability from day one                                            | Any unlocked object is exposed                                                | Lockdown as migration one, and catalog checks on every pull request                  |
+| Supabase CLI needs Docker for some commands                                 | Workflow gaps                                                                 | Workflow avoids `db diff`, `db pull`, and `db dump`. Fingerprinting replaces diffing |
+| Postgres major version mismatch between projects created at different times | Behavior drift                                                                | The fingerprint includes the version. Upgrade to align before launch                 |
+| Dashboard edits during incidents                                            | Drift from migrations                                                         | Scheduled drift check. Mandatory follow-up migration                                 |
+| CLI access token tied to a personal account                                 | Offboarding and rotation risk                                                 | Section 10: no personal PAT in CI; dedicated bot or org token; rotation runbook      |
+| Non-atomic database and app deploy                                          | Runtime errors mid-deploy                                                     | Expand and contract rule                                                             |
+| Backups resurrect erased data                                               | GDPR breach                                                                   | Erasure ledger re-applied after restore                                              |
+| No point-in-time recovery on lower tiers                                    | Data loss window                                                              | Owner decides production tier and target recovery (ADR-0036)                         |
 
 ## Implementation Verification (P0-T15)
 
