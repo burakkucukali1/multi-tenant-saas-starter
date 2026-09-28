@@ -4,11 +4,11 @@ ADR-0025 testing layout for this repository.
 
 ## Projects
 
-| Project | Config | Location |
-|---|---|---|
-| Unit | `jest.config.mjs` (project `unit`) | `tests/unit/**/*.test.ts` |
+| Project     | Config                                    | Location                         |
+| ----------- | ----------------------------------------- | -------------------------------- |
+| Unit        | `jest.config.mjs` (project `unit`)        | `tests/unit/**/*.test.ts`        |
 | Integration | `jest.config.mjs` (project `integration`) | `tests/integration/**/*.test.ts` |
-| E2E | `playwright.config.ts` | `tests/e2e/**/*.spec.ts` |
+| E2E         | `playwright.config.ts`                    | `tests/e2e/**/*.spec.ts`         |
 
 Run:
 
@@ -18,6 +18,7 @@ pnpm test:unit
 pnpm test:integration
 pnpm test:e2e:install   # once per machine / CI image (Chromium)
 pnpm test:e2e
+pnpm ci:check       # mirrors CI quality gates (add Playwright separately)
 ```
 
 ### E2E (Playwright)

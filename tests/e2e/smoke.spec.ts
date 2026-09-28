@@ -10,7 +10,9 @@ test.describe("route surfaces (ADR-0003)", () => {
     await expect(
       page.getByRole("heading", { name: "Multi-Tenant SaaS Starter" }),
     ).toBeVisible();
-    await expect(page.getByText(`Public surface · locale: ${locale}`)).toBeVisible();
+    await expect(
+      page.getByText(`Public surface · locale: ${locale}`),
+    ).toBeVisible();
   });
 
   test("public home renders", async ({ page }) => {
@@ -22,7 +24,9 @@ test.describe("route surfaces (ADR-0003)", () => {
 
   test("tenant workspace route renders", async ({ page }) => {
     await page.goto(`/${locale}/t/${workspaceSlug}`);
-    await expect(page.getByRole("heading", { name: "Workspace" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Workspace" }),
+    ).toBeVisible();
     await expect(
       page.getByText(`Tenant surface · ${locale} / ${workspaceSlug}`),
     ).toBeVisible();
@@ -33,6 +37,8 @@ test.describe("route surfaces (ADR-0003)", () => {
     await expect(
       page.getByRole("heading", { name: "Platform administration" }),
     ).toBeVisible();
-    await expect(page.getByText(`Platform surface · locale: ${locale}`)).toBeVisible();
+    await expect(
+      page.getByText(`Platform surface · locale: ${locale}`),
+    ).toBeVisible();
   });
 });

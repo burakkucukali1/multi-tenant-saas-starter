@@ -14,12 +14,28 @@ export const modules = {
     path: "^lib/db/(?!platform/).+",
     mayDependOn: ["lib/config"],
   },
-  "lib/db/platform": { rank: 1, path: "^lib/db/platform/", mayDependOn: ["lib/config"] },
+  "lib/db/platform": {
+    rank: 1,
+    path: "^lib/db/platform/",
+    mayDependOn: ["lib/config"],
+  },
   "lib/auth": { rank: 1, path: "^lib/auth/", mayDependOn: ["lib/config"] },
   "lib/stripe": { rank: 1, path: "^lib/stripe/", mayDependOn: ["lib/config"] },
-  "shared": { rank: 5, path: "^shared/", mayDependOn: ["lib/config", "lib/i18n"] },
-  "features/audit": { rank: 10, path: "^features/audit/", mayDependOn: ["lib/db"] },
-  "features/authz": { rank: 10, path: "^features/authz/", mayDependOn: ["lib/db"] },
+  shared: {
+    rank: 5,
+    path: "^shared/",
+    mayDependOn: ["lib/config", "lib/i18n"],
+  },
+  "features/audit": {
+    rank: 10,
+    path: "^features/audit/",
+    mayDependOn: ["lib/db"],
+  },
+  "features/authz": {
+    rank: 10,
+    path: "^features/authz/",
+    mayDependOn: ["lib/db"],
+  },
   "platform/access": {
     rank: 15,
     path: "^platform/access/",
@@ -35,7 +51,11 @@ export const modules = {
     path: "^features/workspaces/",
     mayDependOn: ["lib/db", "features/audit", "features/identity"],
   },
-  "features/plans": { rank: 30, path: "^features/plans/", mayDependOn: ["lib/db"] },
+  "features/plans": {
+    rank: 30,
+    path: "^features/plans/",
+    mayDependOn: ["lib/db"],
+  },
   "features/legal": {
     rank: 30,
     path: "^features/legal/",
@@ -55,7 +75,13 @@ export const modules = {
   "features/subscriptions": {
     rank: 50,
     path: "^features/subscriptions/",
-    mayDependOn: ["lib/db", "lib/stripe", "features/audit", "features/plans", "features/workspaces"],
+    mayDependOn: [
+      "lib/db",
+      "lib/stripe",
+      "features/audit",
+      "features/plans",
+      "features/workspaces",
+    ],
   },
   "features/promotions": {
     rank: 50,
@@ -111,12 +137,12 @@ export const modules = {
       "features/legal",
     ],
   },
-  "workflows": {
+  workflows: {
     rank: 80,
     path: "^workflows/([^/]+)/",
     mayDependOn: ["*below80"],
   },
-  "platform": {
+  platform: {
     rank: 85,
     path: "^platform/(?!access/).+",
     mayDependOn: [
@@ -128,8 +154,12 @@ export const modules = {
       "workflows",
     ],
   },
-  "app": { rank: 100, path: "^app/", mayDependOn: ["shared", "features", "workflows", "platform"] },
-  "middleware": { rank: 100, path: "^middleware\\.ts$", mayDependOn: [] },
+  app: {
+    rank: 100,
+    path: "^app/",
+    mayDependOn: ["shared", "features", "workflows", "platform"],
+  },
+  middleware: { rank: 100, path: "^middleware\\.ts$", mayDependOn: [] },
 };
 
 export const forbiddenPairs = [

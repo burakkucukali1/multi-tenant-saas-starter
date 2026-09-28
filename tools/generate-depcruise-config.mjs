@@ -118,7 +118,8 @@ for (const [id, def] of Object.entries(modules)) {
 forbidden.push({
   name: "rank-app",
   severity: "error",
-  comment: "ADR-0021: app (rank 100) uses shared/ and module index.ts entrypoints only",
+  comment:
+    "ADR-0021: app (rank 100) uses shared/ and module index.ts entrypoints only",
   from: { path: "^app/" },
   to: {
     path: "^(lib|shared|features|workflows|platform)/",
@@ -141,7 +142,13 @@ forbidden.push({
     pathNot: [
       "^workflows/\\1/",
       ...moduleIds
-        .filter((mid) => modules[mid].rank < 80 && mid !== "workflows" && mid !== "app" && mid !== "middleware")
+        .filter(
+          (mid) =>
+            modules[mid].rank < 80 &&
+            mid !== "workflows" &&
+            mid !== "app" &&
+            mid !== "middleware",
+        )
         .flatMap((mid) => {
           const p = mid.replace(/\//g, "\\/");
           if (mid.startsWith("features/")) {
@@ -211,5 +218,11 @@ module.exports = {
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 writeFileSync(`${root}/.dependency-cruiser.cjs`, buildConfig(true), "utf8");
-writeFileSync(`${root}/.dependency-cruiser.fixtures.cjs`, buildConfig(false), "utf8");
-console.log(`Wrote .dependency-cruiser.cjs and .dependency-cruiser.fixtures.cjs (${forbidden.length} rules)`);
+writeFileSync(
+  `${root}/.dependency-cruiser.fixtures.cjs`,
+  buildConfig(false),
+  "utf8",
+);
+console.log(
+  `Wrote .dependency-cruiser.cjs and .dependency-cruiser.fixtures.cjs (${forbidden.length} rules)`,
+);

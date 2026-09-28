@@ -1,9 +1,11 @@
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-
 const depcruiseBin = fileURLToPath(
-  new URL("../node_modules/dependency-cruiser/bin/dependency-cruise.mjs", import.meta.url),
+  new URL(
+    "../node_modules/dependency-cruiser/bin/dependency-cruise.mjs",
+    import.meta.url,
+  ),
 );
 
 const cases = [
@@ -60,13 +62,17 @@ for (const testCase of cases) {
 
   if (violations.length === 0 && result.status === 0) {
     failed += 1;
-    console.error(`[${testCase.name}] expected violations but cruise reported none`);
+    console.error(
+      `[${testCase.name}] expected violations but cruise reported none`,
+    );
     continue;
   }
 
   if (!matched) {
     failed += 1;
-    console.error(`[${testCase.name}] expected rule ${testCase.expectRule}, got:`);
+    console.error(
+      `[${testCase.name}] expected rule ${testCase.expectRule}, got:`,
+    );
     console.error(output.slice(0, 500));
   } else {
     console.log(`[${testCase.name}] ok`);
@@ -76,7 +82,9 @@ for (const testCase of cases) {
 const eslintResult = spawnSync(
   process.execPath,
   [
-    fileURLToPath(new URL("../node_modules/eslint/bin/eslint.js", import.meta.url)),
+    fileURLToPath(
+      new URL("../node_modules/eslint/bin/eslint.js", import.meta.url),
+    ),
     eslintSdkFixture,
     "--no-ignore",
     "--format",
@@ -88,14 +96,18 @@ const eslintResult = spawnSync(
 let sdkErrors = 0;
 try {
   const eslintJson = JSON.parse(eslintResult.stdout || "[]");
-  sdkErrors = eslintJson.flatMap((f) => f.messages).filter((m) => m.ruleId === "no-restricted-imports").length;
+  sdkErrors = eslintJson
+    .flatMap((f) => f.messages)
+    .filter((m) => m.ruleId === "no-restricted-imports").length;
 } catch {
   sdkErrors = 0;
 }
 
 if (sdkErrors === 0) {
   failed += 1;
-  console.error("[sdk-outside-lib] expected ESLint no-restricted-imports on app fixture");
+  console.error(
+    "[sdk-outside-lib] expected ESLint no-restricted-imports on app fixture",
+  );
 } else {
   console.log("[sdk-outside-lib] ok (ESLint boundary)");
 }
