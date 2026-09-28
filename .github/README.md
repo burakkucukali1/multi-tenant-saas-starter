@@ -1,5 +1,13 @@
 # GitHub configuration
 
+Repository governance (ADR-0026, ADR-0027):
+
+| Artifact                                               | Purpose                                                  |
+| ------------------------------------------------------ | -------------------------------------------------------- |
+| [`pull_request_template.md`](pull_request_template.md) | Task ID, approval level, checklist, validation           |
+| [`branch-protection.md`](branch-protection.md)         | Owner steps for protecting `main` and required CI checks |
+| [`workflows/ci.yml`](workflows/ci.yml)                 | Automated checks on pull requests and `main`             |
+
 ## CI workflow (`workflows/ci.yml`)
 
 Runs on every pull request and on pushes to `main`.
@@ -34,3 +42,10 @@ Future (P2+ migrations and Supabase CLI in CI):
 | `SUPABASE_CI_DB_PASSWORD` | Database password for CLI operations                           |
 
 GitHub **Environments** (`ci`, `dev`, `production`) will gate production credentials when ADR-0036 is resolved.
+
+## Required status checks (branch protection)
+
+After CI has run on `main`, require these checks before merge (see [`branch-protection.md`](branch-protection.md)):
+
+1. `Lint, types, tests, and build`
+2. `Integration tests (CI Postgres)`

@@ -2,6 +2,8 @@
 
 Reusable multi-tenant SaaS foundation. Architecture and progress: `.ai/` and `AGENTS.md`.
 
+Contributing: pull requests use [`.github/pull_request_template.md`](.github/pull_request_template.md). Branch protection setup: [`.github/branch-protection.md`](.github/branch-protection.md).
+
 ## Requirements
 
 - Node.js **24.21.0** (see `.nvmrc`)
@@ -21,4 +23,8 @@ pnpm depcruise:validate-rules
 pnpm test
 pnpm test:unit
 pnpm test:integration
+pnpm ci:check
+pnpm test:e2e
 ```
+
+CI details: [`.github/README.md`](.github/README.md).
