@@ -20,7 +20,9 @@
     "depcruise:validate-rules": "node tools/verify-depcruise-rules.mjs",
     "test": "jest",
     "test:unit": "jest --selectProjects unit",
-    "test:integration": "jest --selectProjects integration"
+    "test:integration": "jest --selectProjects integration",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install --with-deps chromium"
   },
   "dependencies": {
     "next": "16.3.6",
@@ -45,6 +47,7 @@
     "eslint-config-prettier": "^10.1.5",
     "prettier": "^3.5.3",
     "tailwindcss": "^4",
+    "@playwright/test": "^1.52.0",
     "typescript": "^5"
   }
 }
