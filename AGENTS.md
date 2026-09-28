@@ -12,6 +12,76 @@ Load knowledge only when it directly affects implementation, architecture, revie
 
 ---
 
+# Architectural Decisions and Progress
+
+**Decisions:** `.ai/decisions/index.md` (Accepted ADRs are binding). Never contradict an Accepted ADR; propose a superseding ADR instead.
+
+**Progress:** `.ai/progress/roadmap.md` (index) and `.ai/progress/phases/pN-*.md` (tasks, context manifests, exit criteria). Rules: ADR-0027.
+
+Before any implementation task:
+
+1. Read the roadmap index and the **active phase file**.
+2. Load only files listed in that phase's **context manifest**, plus core files below.
+3. Reference task IDs (`PN-TNN`) in plans and pull requests.
+
+Architecture planning is complete. Readiness: `.ai/progress/readiness-assessment.md`.
+
+---
+
+# Approved Project Architecture
+
+This starter's approved architecture (see ADRs for detail). Do not reinterpret or replace these without owner approval.
+
+## Multi-tenant model (ADR-0004, ADR-0006, ADR-0010)
+
+- **User → Membership → Workspace.** One user, many workspaces.
+- Path-based resolution: `/[locale]/t/[workspaceSlug]/...`.
+- Shared database, shared schema; every tenant-owned row has `workspace_id NOT NULL`.
+- Isolation: composite FKs, `WorkspaceScope`-bound repositories, RLS lockdown (no permissive policies), generated isolation tests.
+
+## Clerk + Supabase (ADR-0005, ADR-0007, ADR-0041)
+
+- **Clerk:** authentication and profile only. No Clerk Organizations. Access only via `lib/auth`.
+- **Supabase PostgreSQL:** all data. **No ORM** — Supabase client and committed generated types.
+- Server-side **service role** (or secret API key) only inside `lib/db` and `lib/db/platform` (`server-only`).
+- **Cloud-first:** separate Free tier projects for **dev** and **ci**; migrations and config as code; dashboard read-only for schema/settings.
+- Multi-statement writes use **`tx_*` Postgres functions** via `.rpc()` (ADR-0008).
+
+## Platform RBAC vs tenant RBAC (ADR-0011, ADR-0012)
+
+- **Tenant RBAC:** database-backed, flat roles (Owner, Admin, Member, Viewer). Permissions resolved once per request; pure `can()` checks. No custom roles in v1.
+- **Platform RBAC:** separate `platform` schema, separate permission namespace, separate `PlatformContext`. **Mutual exclusion:** platform admins have no tenant permissions; tenant roles grant no platform permissions.
+- Platform **reads** use dedicated platform read models. Platform **writes** call the same domain commands with a `WorkspaceScope` minted by platform access (audited). No bypass flags.
+
+## Migration-first database workflow (ADR-0007, ADR-0008, ADR-0041)
+
+- Schema source of truth: `supabase/migrations/*.sql`. Merged migrations are immutable; expand-and-contract for deploy safety.
+- Reference data in migrations; synthetic data in `seed.sql` (never production).
+- **Canonical types** generated from the CI project after migrations apply; CI fails on drift.
+- Production and staging migrated **only by CI**.
+
+## Dependency governance (ADR-0021, ADR-0030)
+
+- Modules have **ranks**; import only **lower** ranks through public `index.ts`. Dependency-cruiser rules are generated from the ADR map.
+- SDKs (Supabase, Clerk, Stripe) only in `lib/*`. `shared/` never imports features or workflows.
+
+## Recursion prevention (ADR-0022)
+
+- No cycles (CI). Workflows do not call workflows. Flat roles, no auth in repositories. No in-process event bus; no triggers that write to other tables. `tx_*` functions do not call other `tx_*` functions. Time-bound state evaluated at read time (ADR-0020).
+
+## Phase-based implementation (ADR-0027, `.ai/progress/`)
+
+- Work proceeds **one phase at a time** (P0–P8). Complete phase exit criteria before treating the phase as done.
+- One task (or tightly coupled group) per branch/pull request. Approval levels per ADR-0001 and agent-governance.
+
+## Stack pins (ADR-0034)
+
+- Next.js 16.3.6, React 19.3.0, Node.js 24.21.0 (Active LTS), pnpm 12.6.0.
+
+Full project constraints: `.ai/project/project-context.md`.
+
+---
+
 # Knowledge Hierarchy
 
 Knowledge is organized into five layers:
