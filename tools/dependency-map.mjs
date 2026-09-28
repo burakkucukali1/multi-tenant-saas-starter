@@ -9,6 +9,7 @@
 export const modules = {
   "lib/config": { rank: 0, path: "^lib/config/", mayDependOn: [] },
   "lib/i18n": { rank: 0, path: "^lib/i18n/", mayDependOn: [] },
+  "lib/logger": { rank: 0, path: "^lib/logger/", mayDependOn: [] },
   "lib/db": {
     rank: 1,
     path: "^lib/db/(?!platform/).+",

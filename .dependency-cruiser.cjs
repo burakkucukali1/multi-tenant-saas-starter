@@ -108,6 +108,20 @@ module.exports = {
     }
   },
   {
+    "name": "rank-lib-logger",
+    "severity": "error",
+    "comment": "ADR-0021: lib/logger (rank 0) may depend only on: none",
+    "from": {
+      "path": "^lib/logger/"
+    },
+    "to": {
+      "path": "^(app|lib|shared|features|workflows|platform)/",
+      "pathNot": [
+        "^lib\\/logger"
+      ]
+    }
+  },
+  {
     "name": "rank-lib-db",
     "severity": "error",
     "comment": "ADR-0021: lib/db (rank 1) may depend only on: lib/config",
@@ -482,6 +496,7 @@ module.exports = {
         "^workflows/\\1/",
         "^lib\\/config/",
         "^lib\\/i18n/",
+        "^lib\\/logger/",
         "^lib\\/db/",
         "^lib\\/db\\/platform/",
         "^lib\\/auth/",

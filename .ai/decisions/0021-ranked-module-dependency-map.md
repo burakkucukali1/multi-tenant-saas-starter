@@ -21,7 +21,7 @@ Many workflows touch several features. A flat "features never call each other" r
 
 | Rank | Module                                                                                                                | May depend on                                                                                                                                             |
 | ---- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | `lib/config`, `lib/i18n`                                                                                              | none                                                                                                                                                      |
+| 0    | `lib/config`, `lib/i18n`, `lib/logger`                                                                                | none                                                                                                                                                      |
 | 1    | `lib/db`, `lib/db/platform`, `lib/auth`, `lib/stripe`                                                                 | `lib/config`                                                                                                                                              |
 | 5    | `shared/` (design system, utilities)                                                                                  | `lib/config`, `lib/i18n`                                                                                                                                  |
 | 10   | `features/audit`                                                                                                      | `lib/db`                                                                                                                                                  |
@@ -69,3 +69,4 @@ Changing the map is Level 1. Record every change in the changelog below.
 ## Map Changelog
 
 - 2026-09-27: initial map.
+- 2026-09-28: add `lib/logger` (rank 0, ADR-0029 / P0-T14).

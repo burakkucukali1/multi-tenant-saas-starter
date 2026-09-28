@@ -14,7 +14,7 @@ Rules: ADR-0027.
 ## Current Position
 
 - Phase: **P0 — Foundations** (implementation)
-- Next task: **P0-T14**
+- Next task: **P0-T15**
 - Non-critical for early P0: ADR-0036 (production hosting and recovery; dev/CI Supabase per ADR-0041)
 
 ## Phases
