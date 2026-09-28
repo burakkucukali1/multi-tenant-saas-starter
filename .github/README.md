@@ -7,6 +7,8 @@ Repository governance (ADR-0026, ADR-0027):
 | [`pull_request_template.md`](pull_request_template.md) | Task ID, approval level, checklist, validation           |
 | [`branch-protection.md`](branch-protection.md)         | Owner steps for protecting `main` and required CI checks |
 | [`workflows/ci.yml`](workflows/ci.yml)                 | Automated checks on pull requests and `main`             |
+| [`renovate.md`](renovate.md)                           | Dependency updates via Renovate (ADR-0030)               |
+| [`../renovate.json`](../renovate.json)                 | Renovate bot configuration                               |
 
 ## CI workflow (`workflows/ci.yml`)
 

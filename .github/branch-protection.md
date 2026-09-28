@@ -42,6 +42,10 @@ pnpm ci:check
 pnpm test:e2e:install && CI=true pnpm test:e2e
 ```
 
+## Renovate pull requests (ADR-0030)
+
+Dependency update PRs use the same required status checks as feature work. Do not bypass reviews for grouped minor/patch PRs without green CI. Major framework bumps (`approval-L3` label) need explicit approval per ADR-0034. See [`.github/renovate.md`](renovate.md).
+
 ## Merge strategy
 
 - **Squash merge** only (ADR-0026).

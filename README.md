@@ -2,7 +2,7 @@
 
 Reusable multi-tenant SaaS foundation. Architecture and progress: `.ai/` and `AGENTS.md`.
 
-Contributing: pull requests use [`.github/pull_request_template.md`](.github/pull_request_template.md). Branch protection setup: [`.github/branch-protection.md`](.github/branch-protection.md).
+Contributing: pull requests use [`.github/pull_request_template.md`](.github/pull_request_template.md). Branch protection: [`.github/branch-protection.md`](.github/branch-protection.md). Dependencies: [Renovate](.github/renovate.md) (`renovate.json`, ADR-0030).
 
 ## Requirements
 

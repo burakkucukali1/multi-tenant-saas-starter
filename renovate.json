@@ -1,0 +1,104 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separateMajorMinor",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "timezone": "UTC",
+  "schedule": ["before 6am on Monday"],
+  "labels": ["dependencies"],
+  "commitMessagePrefix": "chore(deps):",
+  "commitMessageAction": "update",
+  "commitMessageTopic": "{{depName}}",
+  "rangeStrategy": "replace",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on Monday"]
+  },
+  "postUpdateOptions": ["pnpmDedupe"],
+  "prConcurrentLimit": 5,
+  "platformAutomerge": false,
+  "automerge": false,
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["dependencies", "security"]
+  },
+  "packageRules": [
+    {
+      "description": "ADR-0030: one grouped PR for all minor and patch npm updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major dependencies",
+      "groupSlug": "non-major"
+    },
+    {
+      "description": "ADR-0034: Next.js runtime pins — exact versions; major needs L3",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["next"],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["approval-L3", "framework"],
+      "groupName": null
+    },
+    {
+      "description": "ADR-0034: React runtime pins — exact versions; major needs L3",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["react", "react-dom"],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["approval-L3", "framework"],
+      "groupName": null
+    },
+    {
+      "description": "Keep eslint-config-next aligned with Next.js (separate PR per bump type via separateMajorMinor)",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["eslint-config-next"],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["approval-L3", "framework"]
+    },
+    {
+      "description": "ADR-0034: Node.js pin is L3 — do not auto-bump via Renovate",
+      "matchManagers": ["nvm", "nodenv", "node-version", "asdf"],
+      "enabled": false
+    },
+    {
+      "description": "ADR-0034: pnpm version comes from packageManager — manual review",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["pnpm"],
+      "enabled": false
+    },
+    {
+      "description": "New runtime dependencies need L1 justification (ADR-0030) — never automerge",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "automerge": false
+    },
+    {
+      "description": "Vendor SDK additions are L3 + ADR (ADR-0030) — flag majors",
+      "matchManagers": ["npm"],
+      "matchPackageNames": [
+        "@supabase/supabase-js",
+        "@supabase/ssr",
+        "@clerk/nextjs",
+        "@clerk/backend",
+        "stripe"
+      ],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["approval-L3", "vendor-sdk"]
+    },
+    {
+      "description": "GitHub Actions: weekly digest pins alongside npm schedule",
+      "matchManagers": ["github-actions"],
+      "extends": ["helpers:pinGitHubActionDigests"],
+      "groupName": "GitHub Actions",
+      "groupSlug": "github-actions"
+    }
+  ],
+  "prBodyNotes": [
+    "ADR-0030: lockfile must stay in sync (`pnpm-lock.yaml`).",
+    "Run required CI checks before merge (same as feature PRs).",
+    "Major Next.js / React / Node / new vendor SDKs: obtain approval per ADR-0034 and ADR-0030.",
+    "New runtime dependency: Level 1 approval with maintenance/size/alternatives in the PR."
+  ]
+}
