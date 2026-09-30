@@ -3,8 +3,7 @@
  * Set SUPABASE_TEST_DATABASE_URL (preferred) or DATABASE_URL for integration tests.
  */
 export type IntegrationDatabaseUrlSource =
-  | "SUPABASE_TEST_DATABASE_URL"
-  | "DATABASE_URL";
+  "SUPABASE_TEST_DATABASE_URL" | "DATABASE_URL";
 
 export function resolveIntegrationDatabaseUrl(): {
   url: string;
@@ -28,8 +27,7 @@ export function getIntegrationDatabaseUrl(): string | undefined {
 }
 
 export function getIntegrationDatabaseUrlSource():
-  | IntegrationDatabaseUrlSource
-  | undefined {
+  IntegrationDatabaseUrlSource | undefined {
   return resolveIntegrationDatabaseUrl()?.source;
 }
 
