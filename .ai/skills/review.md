@@ -178,6 +178,20 @@ unless they create real maintenance cost.
 
 ---
 
+# Scope Review
+
+Verify:
+
+- Only files required by the active task changed
+- No unrelated roadmap changes exist
+- No unrelated ADR changes exist
+- No unrelated documentation changes exist
+- No unrelated phase status changes exist
+
+Flag mixed-task pull requests.
+
+---
+
 # Output Structure
 
 Summary

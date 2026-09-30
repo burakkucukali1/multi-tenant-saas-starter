@@ -305,6 +305,24 @@ Do not continue based on assumptions.
 
 ---
 
+# Branch Discipline
+
+Implementation work must remain scoped to the active task.
+
+One task = one branch.
+
+Do not combine work from multiple tasks into a single branch unless explicitly approved.
+
+If unrelated changes are detected:
+
+- report them
+- explain their origin if known
+- ask whether they should be separated
+
+Do not silently include unrelated work.
+
+---
+
 # Golden Rule
 
 The agent may propose.
