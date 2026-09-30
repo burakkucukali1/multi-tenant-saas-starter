@@ -17,7 +17,7 @@ pnpm dev
 pnpm build
 pnpm lint
 pnpm format:check
-pnpm typecheck
+pnpm typecheck   # runs next typegen, then tsc (needs generated route types)
 pnpm depcruise
 pnpm depcruise:validate-rules
 pnpm test
