@@ -33,9 +33,11 @@ pnpm ci:check       # mirrors CI quality gates (add Playwright separately)
 Integration tests use the **CI Supabase Postgres** project (`<app>-ci`) via direct connection string:
 
 - `SUPABASE_TEST_DATABASE_URL` (preferred), or
-- `DATABASE_URL`
+- `DATABASE_URL` (fallback only when the Supabase variable is unset or blank)
 
-When unset, integration smoke tests **skip** (foundation only until P0-T16/T17).
+If both are set, integration tests connect with **`SUPABASE_TEST_DATABASE_URL`**; changing only `DATABASE_URL` will not affect the smoke test.
+
+Local: set in **`.env.local`** (loaded by `tests/integration/setup-env.cjs` before tests run). CI: GitHub Actions secrets (`SUPABASE_TEST_DATABASE_URL`). When unset, integration smoke tests **skip**.
 
 Future suites (P2+): tenant isolation, authorization matrix, repository and `tx_*` tests.
 

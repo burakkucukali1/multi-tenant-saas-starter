@@ -4,5 +4,11 @@
     "types": ["jest", "node"],
     "noEmit": true
   },
-  "include": ["tests/**/*.ts", "jest.config.mjs"]
+  "include": ["tests/**/*.ts", "jest.config.mjs"],
+  "exclude": [
+    "node_modules",
+    "lib/__depcruise-fixtures__",
+    "features/__depcruise-fixtures__",
+    "app/__depcruise-fixtures__"
+  ]
 }

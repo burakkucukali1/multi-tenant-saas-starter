@@ -32,6 +32,7 @@
   ],
   "exclude": [
     "node_modules",
+    "tests",
     "lib/__depcruise-fixtures__",
     "features/__depcruise-fixtures__",
     "app/__depcruise-fixtures__"

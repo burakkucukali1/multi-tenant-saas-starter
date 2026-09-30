@@ -44,6 +44,7 @@ const eslintConfig = defineConfig([
     "lib/__depcruise-fixtures__/**",
     "features/__depcruise-fixtures__/**",
     "app/__depcruise-fixtures__/**",
+    "tests/integration/setup-env.cjs",
   ]),
   {
     files: ["**/*.{ts,tsx}"],

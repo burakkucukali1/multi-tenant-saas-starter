@@ -23,6 +23,7 @@ const config = {
     {
       displayName: "integration",
       testEnvironment: "node",
+      setupFiles: ["<rootDir>/tests/integration/setup-env.cjs"],
       testMatch: ["<rootDir>/tests/integration/**/*.test.ts"],
       moduleNameMapper: {
         "^@/(.*)$": "<rootDir>/$1",
