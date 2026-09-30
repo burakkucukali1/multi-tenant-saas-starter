@@ -27,4 +27,4 @@ pnpm ci:check
 pnpm test:e2e
 ```
 
-CI details: [`.github/README.md`](.github/README.md).
+CI details: [`.github/README.md`](.github/README.md). Local env template: [`.env.example`](.env.example) ([secrets runbook](docs/runbooks/secrets-dev-ci.md)).
