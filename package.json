@@ -17,7 +17,7 @@
     "typegen": "next typegen",
     "typecheck": "next typegen && tsc --noEmit && tsc --noEmit -p tsconfig.jest.json",
     "depcruise:generate": "node tools/generate-depcruise-config.mjs",
-    "depcruise": "depcruise app lib shared features workflows platform middleware.ts --config .dependency-cruiser.cjs",
+    "depcruise": "depcruise app lib shared features workflows platform proxy.ts --config .dependency-cruiser.cjs",
     "depcruise:validate-rules": "node tools/verify-depcruise-rules.mjs",
     "test": "jest",
     "test:unit": "jest --selectProjects unit",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "next": "16.3.6",
+    "next-intl": "^4.14.8",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },

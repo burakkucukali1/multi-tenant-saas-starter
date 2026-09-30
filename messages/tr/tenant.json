@@ -1,0 +1,6 @@
+{
+  "workspace": {
+    "title": "Çalışma alanı",
+    "surfaceLabel": "Kiracı yüzeyi · {locale} / {workspaceSlug}"
+  }
+}
