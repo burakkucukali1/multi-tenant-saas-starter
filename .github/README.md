@@ -26,26 +26,22 @@ pnpm ci:check
 pnpm test:e2e:install && CI=true pnpm test:e2e
 ```
 
-## Repository secrets (placeholders — never commit values)
+## Repository secrets (never commit values)
 
-Configure in **Settings → Secrets and variables → Actions**. Names only; values come from the Supabase CI project (ADR-0041).
+Configure in **Settings → Secrets and variables → Actions**. Full inventory and local setup: [`docs/runbooks/secrets-dev-ci.md`](../docs/runbooks/secrets-dev-ci.md) (P0-T17, ADR-0041 §10).
 
-| Secret                       | Used by                                      | Required for P0 CI green   |
-| ---------------------------- | -------------------------------------------- | -------------------------- |
-| `SUPABASE_TEST_DATABASE_URL` | Integration job (`pg` smoke / future suites) | No — tests skip when unset |
-| `DATABASE_URL`               | Fallback for integration URL                 | No                         |
+| Secret                         | Used by                             | P0 CI                                   |
+| ------------------------------ | ----------------------------------- | --------------------------------------- |
+| `SUPABASE_TEST_DATABASE_URL`   | Integration job (Postgres smoke)    | Yes — job runs smoke; skips if unset    |
+| `DATABASE_URL`                 | Fallback integration URL            | Optional (prefer Supabase secret above) |
+| `SUPABASE_ACCESS_TOKEN`        | Supabase CLI / Management API (P2+) | Store now; bot/org token only           |
+| `SUPABASE_CI_PROJECT_REF`      | CLI `--project-ref` (P2+)           | Store now                               |
+| `SUPABASE_CI_DB_PASSWORD`      | CLI link / `db push` (P2+)          | Store now                               |
+| `SUPABASE_CI_SERVICE_ROLE_KEY` | Server-side DB client (P2+)         | Store now                               |
 
-Future (P2+ migrations and Supabase CLI in CI):
+Local dev uses [`.env.example`](../.env.example) → `.env.local` (dev + CI fields). GitHub **Environments** for production wait for ADR-0036.
 
-| Secret                    | Purpose                                                        |
-| ------------------------- | -------------------------------------------------------------- |
-| `SUPABASE_ACCESS_TOKEN`   | CLI / Management API (dedicated bot token, not a personal PAT) |
-| `SUPABASE_CI_PROJECT_REF` | CI project identifier                                          |
-| `SUPABASE_CI_DB_PASSWORD` | Database password for CLI operations                           |
-
-GitHub **Environments** (`ci`, `dev`, `production`) will gate production credentials when ADR-0036 is resolved.
-
-Supabase Cloud workflow verification (P0-T15): [`docs/runbooks/supabase-cloud.md`](../docs/runbooks/supabase-cloud.md).
+Supabase workflow verification (P0-T15): [`docs/runbooks/supabase-cloud.md`](../docs/runbooks/supabase-cloud.md).
 
 ## Required status checks (branch protection)
 

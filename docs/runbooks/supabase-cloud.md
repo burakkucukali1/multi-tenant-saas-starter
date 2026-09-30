@@ -80,17 +80,17 @@ Sources: [Supabase pricing](https://supabase.com/pricing), [Project pausing](htt
 | Platform config    | `config diff` + future Management API script          | Needs `config.toml` (P2)    |
 | `db diff`          | Not used                                              | Confirmed Docker dependency |
 
-## Secret management (assumptions — not exercised in P0)
+## Secret management (P0-T17)
 
-| Secret                                 | ADR-0041 storage                                | P0-T15                                                                                                    |
-| -------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `SUPABASE_ACCESS_TOKEN`                | GitHub Secret (bot/org PAT, not personal in CI) | **Owner:** configure in P0-T17; use `supabase login` token or env var in CI                               |
-| Project ref                            | GitHub Environment variables per env            | Placeholder names in `.github/README.md`                                                                  |
-| Database password                      | GitHub Secrets                                  | Used by `link`, `db push`, pooler URL for Jest                                                            |
-| Server API key (secret / service role) | GitHub Secrets + `.env.local`                   | **Owner verify:** Dashboard → Project Settings → API keys (prefer revocable **secret** keys when offered) |
-| Dev vs CI credentials **never shared** | Separate project refs and tokens                | Process + separate GitHub secrets                                                                         |
+| Secret                                 | ADR-0041 storage                                | P0-T17                                                                                    |
+| -------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `SUPABASE_ACCESS_TOKEN`                | GitHub Secret (bot/org PAT, not personal in CI) | Documented; local personal PAT in `.env.local` only                                       |
+| Project ref                            | `.env.local` + GitHub (P2 CLI)                  | `SUPABASE_PROJECT_REF`, `SUPABASE_CI_PROJECT_REF` in [`.env.example`](../../.env.example) |
+| Database password                      | GitHub Secrets + `.env.local`                   | Per-project passwords in `.env.local`; CI password in GitHub for P2                       |
+| Server API key (secret / service role) | GitHub Secrets + `.env.local`                   | Prefer revocable secret keys when dashboard offers them                                   |
+| Dev vs CI credentials **never shared** | Separate project refs and tokens                | [secrets-dev-ci.md](secrets-dev-ci.md)                                                    |
 
-**Live checks pending P0-T17:** `supabase link`, `db push --dry-run`, `migration list --linked`, `gen types --project-id`, on **dev** and **ci** projects.
+**Operator runbook:** [secrets-dev-ci.md](secrets-dev-ci.md). **Live CLI checks** (`link`, `db push --dry-run`, `gen types --project-id`) remain optional until P2 migrations exist.
 
 ## CI project workflow (planned P2 — assumptions)
 
@@ -105,7 +105,13 @@ Sources: [Supabase pricing](https://supabase.com/pricing), [Project pausing](htt
 
 Current P0 CI runs Jest integration only; database migration steps land in **P2**.
 
-## Owner checklist (after P0-T17)
+### P0-T17 record (2026-09-30)
+
+- **In-repo:** [`.env.example`](../../.env.example), [secrets-dev-ci.md](secrets-dev-ci.md), [`.github/README.md`](../../.github/README.md) secret inventory.
+- **Configured:** dev/CI Supabase projects (P0-T16); local `.env.local` and GitHub `SUPABASE_TEST_DATABASE_URL` for integration CI (green on `main`).
+- **Deferred to P2:** `supabase link`, `db push`, `migration list --linked`, `gen types --project-id` against linked projects (no migrations in repo yet).
+
+## Owner checklist (before P2)
 
 1. `pnpm exec supabase --version` matches pinned version (P2-T01).
 2. `supabase link --project-ref <dev-ref>` (local profile only for dev).

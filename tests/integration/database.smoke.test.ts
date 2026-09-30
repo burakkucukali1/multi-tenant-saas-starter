@@ -3,7 +3,7 @@ import { withIntegrationClient } from "./helpers/database";
 
 describe("integration database (Supabase Cloud CI project)", () => {
   if (!hasIntegrationDatabase()) {
-    it("skipped until SUPABASE_TEST_DATABASE_URL is configured (P0-T16/T17)", () => {
+    it("skipped until SUPABASE_TEST_DATABASE_URL or DATABASE_URL is configured", () => {
       expect(true).toBe(true);
     });
     return;
