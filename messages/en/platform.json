@@ -1,0 +1,6 @@
+{
+  "admin": {
+    "title": "Platform administration",
+    "surfaceLabel": "Platform surface · locale: {locale}"
+  }
+}

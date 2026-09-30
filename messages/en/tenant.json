@@ -1,0 +1,6 @@
+{
+  "workspace": {
+    "title": "Workspace",
+    "surfaceLabel": "Tenant surface · {locale} / {workspaceSlug}"
+  }
+}
