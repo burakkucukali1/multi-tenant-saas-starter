@@ -45,6 +45,8 @@ Future (P2+ migrations and Supabase CLI in CI):
 
 GitHub **Environments** (`ci`, `dev`, `production`) will gate production credentials when ADR-0036 is resolved.
 
+Supabase Cloud workflow verification (P0-T15): [`docs/runbooks/supabase-cloud.md`](../docs/runbooks/supabase-cloud.md).
+
 ## Required status checks (branch protection)
 
 After CI has run on `main`, require these checks before merge (see [`branch-protection.md`](branch-protection.md)):

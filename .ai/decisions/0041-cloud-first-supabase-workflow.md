@@ -241,6 +241,17 @@ Architecture is accepted. Supabase product behavior changes over time. **P0-T15*
 
 Any failed assumption is recorded as an amendment to this ADR before P2 starts.
 
+### P0-T15 record (2026-09-28)
+
+Verified against **Supabase CLI 2.118.0** (npm) on a host **without Docker**. Full matrix: [`docs/runbooks/supabase-cloud.md`](../../docs/runbooks/supabase-cloud.md).
+
+- **Confirmed:** cloud-first path without Docker for `db push`, `db reset --linked`, `migration list` (remote flags), `gen types` (`--project-id` / `--linked` / `--db-url`), `config push` / `config diff`, `db lint --linked`, and `db push --include-seed`. Free tier: two active projects, ~7-day inactivity pause, no backups, 500 MB DB per project.
+- **Confirmed:** `db diff` (and documented `db pull`) require Docker (shadow DB / local container). Workflow continues to avoid them.
+- **Clarification (non-blocking):** security and performance advisor output is exposed as `supabase db advisors --linked` in CLI 2.x; P2 catalog checks may use `db lint` and `db advisors` together.
+- **Not exercised in-repo (requires P0-T17 / owner):** live `link`, `push`, and type generation against dev/ci projects; dashboard confirmation of revocable secret API keys and org/bot access tokens for CI.
+
+No decision changes were required.
+
 ## Alternatives Considered
 
 - **Local Docker Supabase as primary** (the earlier ADR-0033 recommendation): rejected by owner constraint.
