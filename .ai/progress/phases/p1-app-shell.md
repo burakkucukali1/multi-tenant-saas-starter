@@ -30,7 +30,7 @@ Out of scope: authentication, data access, feature UI.
 | ID     | Task                                                                                                       | Level | Status | Depends  |
 | ------ | ---------------------------------------------------------------------------------------------------------- | ----- | ------ | -------- |
 | P1-T01 | next-intl setup: `en` default, `tr`, locale middleware, feature-namespaced message layout                  | L1    | done   | —        |
-| P1-T02 | i18n key parity check in CI                                                                                | L1    | todo   | T01      |
+| P1-T02 | i18n key parity check in CI                                                                                | L1    | done   | T01      |
 | P1-T03 | Route group skeletons: `(public)`, `(tenant)/t/[workspaceSlug]`, `(platform)/admin`                        | L1    | todo   | T01      |
 | P1-T04 | `lib/config/brand.ts`: app name, logo, colors, gradients, typography, radius                               | L1    | todo   | ADR-0037 |
 | P1-T05 | Tokens as CSS variables, Tailwind theme mapping, and color modes per ADR-0037                              | L1    | todo   | T04      |

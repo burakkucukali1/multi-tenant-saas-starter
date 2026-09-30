@@ -19,12 +19,13 @@
     "depcruise:generate": "node tools/generate-depcruise-config.mjs",
     "depcruise": "depcruise app lib shared features workflows platform proxy.ts --config .dependency-cruiser.cjs",
     "depcruise:validate-rules": "node tools/verify-depcruise-rules.mjs",
+    "i18n:verify-parity": "node tools/verify-i18n-key-parity.mjs",
     "test": "jest",
     "test:unit": "jest --selectProjects unit",
     "test:integration": "jest --selectProjects integration",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install --with-deps chromium",
-    "ci:check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm depcruise:validate-rules && pnpm depcruise && pnpm test && pnpm build"
+    "ci:check": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm i18n:verify-parity && pnpm depcruise:validate-rules && pnpm depcruise && pnpm test && pnpm build"
   },
   "dependencies": {
     "next": "16.3.6",

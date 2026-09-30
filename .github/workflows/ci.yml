@@ -1,5 +1,5 @@
 # P0-T11 — CI foundation (ADR-0026, ADR-0041).
-# ADR-0026 checks not yet in repo (tenant isolation, auth matrix, migration/types, i18n parity) land in P2+.
+# ADR-0026 checks not yet in repo (tenant isolation, auth matrix, migration/types drift) land in P2+.
 
 name: CI
 
@@ -44,6 +44,9 @@ jobs:
 
       - name: TypeScript
         run: pnpm typecheck
+
+      - name: i18n key parity (en ↔ tr)
+        run: pnpm i18n:verify-parity
 
       - name: Dependency rule self-tests
         run: pnpm depcruise:validate-rules
